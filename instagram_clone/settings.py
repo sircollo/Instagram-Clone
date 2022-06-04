@@ -27,7 +27,9 @@ SECRET_KEY = config('SECRET_KEY', cast=Csv())
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Application definition
 
@@ -40,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'instagram',
     'bootstrap4',
-    'crispy_forms'
+    'crispy_forms',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -132,4 +135,8 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK='bootstrap4'
-
+cloudinary.config( 
+  cloud_name = "dtqnkzj6q", 
+  api_key = "897699858178261", 
+  api_secret = "NsUxBmUCiYvEfB6GnQi8_WqSipU" 
+)
