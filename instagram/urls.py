@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     url('$', views.home, name='home'),
     url('^register/',views.register, name='register'),
-    
+    url('^home/',views.index, name='index'),
     path('accounts/', include('django_registration.backends.one_step.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
 ]
