@@ -26,4 +26,25 @@ def home(request):
   return render(request, 'registration/login.html',context)
 
   
+def register(request):
+  if request.method == "POST":
+     form = UserForm(request.POST)
+     if form.is_valid():
+        form.save()
+        user = form.cleaned_data.get('username')
+        messages.success(request, 'Account created Successfully for '+ user)
+     
+     return redirect('home')
+
+  form = UserForm()
+  return render(request=request, template_name='django_registration/registration_form.html', context={'form':form})
+
+def logoutUser(request):
+  logout(request)
+  return redirect('home')
+
+def index(request):
+  users = User.objects.all()
+  context = {'users':users}
+  return render(request, 'home.html',context)
 
