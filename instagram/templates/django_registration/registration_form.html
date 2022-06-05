@@ -23,27 +23,24 @@
           </div>
         </div>
         <div class="container">
+          
           <form action="" method="POST">
               {% csrf_token %}
+            
               <!-- {{ form|crispy }} -->
-              {{form.email.label}}
               {{form.email}}
   
-              {{form.first_name.label}}
               {{form.first_name}}
   
-              {{form.last_name.label}}
               {{form.last_name}}
   
-              {{form.username.label}}
+ 
               {{form.username}}
-  
-              {{form.password1.label}}
+              
               {{form.password1}}
-  
-              {{form.password2.label}}
+
               {{form.password2}}
-            <p class="text-center">People who use our service may have uploaded your contact information to Instagram. Learn More</p>
+            <p class="text-center" style="font-size: 12px;">People who use our service may have uploaded your contact information to Instagram. Learn More</p>
             <button type="submit" class="btn btn-primary">Sign Up</button>
           </form>
           {% for message in messages%}
@@ -66,25 +63,7 @@
       <button type="button"><i class="fab fa-apple"></i> App Store</button>
       <button type="button"><i class="fab fa-google-play"></i> Google Play</button>
     </div>
-    <div class="footer">
-      <ul>
-        <li><a href="">Meta</a></li>
-        <li><a href="">About</a></li>
-        <li><a href="">Blog</a></li>
-        <li><a href="">Jobs</a></li>
-        <li><a href="">Help</a></li>
-        <li><a href="">API</a></li>
-        <li><a href="">Privacy</a></li>
-        <li><a href="">Terms</a></li>
-        <li><a href="">Top Accounts</a></li>
-        <li><a href="">Hashtags</a></li>
-        <li><a href="">Locations</a></li>
-        <li><a href="">Instagram Lite</a></li>
-        <li><a href="">Contact Uploading & Non-Users</a></li>
-      </ul>
-      <p>English
-        © 2022 Instagram from Meta</p>
-    </div>
+    {% include 'footer.html' %}
   </main>
 </body>
 </html>
