@@ -19,13 +19,17 @@ class Profile(models.Model):
   def delete_profile(self):
     self.delete()
   
+  @classmethod
+  def search_user(cls, name):
+      return cls.objects.filter(user__username__icontains=name).all()
+  
 
 class Image(models.Model):
-  image = CloudinaryField('image')
+  image = models.ImageField(upload_to='images/')
   name = models.CharField(max_length=30,default='image_name')
   caption = models.CharField(max_length=30,default='')
   upload_date = models.DateTimeField(auto_now_add=True, null=True)
-  user = models.ForeignKey(Profile, on_delete=models.CASCADE,null=True,related_name='image')
+  user = models.OneToOneField(User, on_delete=models.CASCADE,null=True,related_name='image')
   likes = models.ManyToManyField(User, related_name='likes',blank=True)
   
   def __str__(self):
@@ -36,6 +40,8 @@ class Image(models.Model):
     
   def delete_image(self):
     self.delete()
+    
+  
 
 class Comment(models.Model):
   comment = models.TextField()
