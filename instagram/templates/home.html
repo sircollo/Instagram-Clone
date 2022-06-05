@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<section class="main">
+  <div class="wrapper">
+      <div class="left-col">
+          <div class="status-wrapper">
+            {% for user in users %}
+              <div class="status-card">
+                  <div class="profile-pic"><img src="{{user.profile.photo.url}}" alt=""></div>
+                  <p class="username">{{user.username}}</p>
+              </div>
+              {% endfor %}
+          </div>             
+      </div>
+  </div>
+</section>
+<section class="main-wrapper">
+<div class="wrapper">
+  <div class="left-col">
+      {% for user in users%}
+      <div class="post">
+          <div class="info">
+              <div class="user">
+                  <div class="profile-pic"><img src="{{user.profile.photo.url}}" alt=""></div>
+                  <p class="username">{{user.username}}</p>
+              </div>
+              <!-- three dot icons to put after finishing ip -->
+          </div>
+          <img src="{{user.image.image.url}}" class="post-image" alt="">
+          <div class="post-content">
+              <div class="reaction-wrapper">
+                  <img src="{% static 'icons/heart.png' %}" class="icon" alt="">
+                  <img src="{% static 'icons/chat.png' %}" class="icon" alt="">
+                  <img src="{% static 'icons/dm.png' %}" class="icon" alt="">
+                  <img src="{% static 'icons/save.png' %}" class="save icon" alt="">
+              </div>
+              <p class="likes">{{user.image.likes|length }}</p>
+              <p class="description"><span>{{user.username}}</span> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur tenetur veritatis placeat, molestiae impedit aut provident eum quo natus molestias?</p>
+              <p class="post-time">{{user.image.upload_date|timesince}} Ago</p>
+          </div>
+          <hr>
+          <div class="comment-wrapper">
+              <img src="{% static 'icons/smile.png' %}" class="icon" alt="">
+              <input type="text" class="comment-box" placeholder="Add a comment">
+              <button class="comment-btn">post</button>
+          </div>
+      </div>
+      {% endfor %}     
+  </div>
+</div>
+
+</section>
+<div class="container">
+    <div class="modal" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header  text-center">
+            <h4 class="modal-title">Create New Post</h4>
+            <button type="button" class="close" data-dismiss="modal">×</button>
+          </div>
+          <div class="modal-body">          
+            
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{upload_form.image}}
+                <div>
+                  {{upload_form.name.label}}
+                  {{upload_form.name}}
+                </div>
+                <div>
+                {{upload_form.caption.label}}
+                {{upload_form.caption}}
+              </div>
+             
+                <input type="hidden" name="next" value="{{ next }}" />  
+                <button type="submit" class="btn btn-primary">Post</button>
+            </form>
+          
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" id="hide">Close</button>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+   
+  </div>
+  <script>
+  $("#show").click(function(){
+    $('#myModal').modal('show');
+   });
+  $("#hide").click(function(){
+   $('#myModal').modal('hide');
+  });
+  </script>
+{% endblock %}
