@@ -1,20 +1,55 @@
 {% load static %}
 
-<nav class="navbar">
+<nav class="navbar" style="font-size: 20px;">
   <div class="nav-wrapper">
     <img src="https://i.imgur.com/zqpwkLQ.png" height="34px"/>  
-      <input type="text" class="search-box" placeholder="search">
+    {% if user.is_authenticated %}
+    <form class="mb-0 h1 ml-auto mr-auto" id="searchform" action="{% url 'search' %}" method="GET">
+      <input name="search_user" autocomplete="off" id="searching" class="form-control d-none d-md-block" placeholder="Search">
+     <i class="spinner "></i>
+      </form>
       <div class="nav-items">
-          <img src="{% static 'icons/home.png' %}" class="icon" alt="lo" height="34px">
+   <a href="{% url 'index' %}" class="icon" ><img src="{% static 'icons/home.png' %}" class="icon" alt="lo" height="34px"></a>  
           <img src="{% static 'icons/dm.png' %}" class="icon" alt="">
-          <img src="{% static 'icons/plus.png' %}" class="icon" alt="">
+          <img src="{% static 'icons/plus.png' %}" class="icon" id="show" alt="">
           <img src="{% static 'icons/compass.png' %}" class="icon" alt="">          
-          <img src="{% static 'icons/heart.png' %}" class="icon" alt="">
-          <img src="{% static 'icons/user.png' %}" class="icon" alt="">
-   
+          <img src="{% static 'icons/heart.png' %}" class="icon" alt="">      
+         
       </div>
+      <div>
+      <ul class="nav navbar-nav"">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: black;">{{user.username}}<span class="glyphicon glyphicon-user pull-right"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'profile' user.pk %}">Pofile</a></li>
+            <li class="divider"></li>
+            <li><a href="{% url 'logout' %}">Log Out </a></li>
+            <li class="divider"></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+      {% endif %}
   </div>
 </nav>
+<style>
+.dropdown {
+    background:#fff;
+    border:1px solid #ccc;
+    border-radius:4px;
+  
+}
+.dropdown-menu>li>a {
+    color:black;
+}
+.dropdown ul.dropdown-menu {
+    border-radius:4px;
+    box-shadow:none;
+    list-style-type: none;
+    font-size: 15px;
+}
 
-<!-- <img src="{% static 'icons/user.png' %}" class="icon" alt=""> -->
+</style>
 
+
+<!-- <a href="{% url 'profile' user.pk %}" class="icon" style="font-size: 20px;list-style-type: none; color: brown;">{{user.username}}<img src="{{user.profile.photo.url}}" width="40" height="40" class="rounded-circle"></a> -->
