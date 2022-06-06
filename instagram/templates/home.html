@@ -18,16 +18,16 @@
 <section class="main-wrapper">
 <div class="wrapper">
   <div class="left-col">
-      {% for user in users%}
+      {% for image in images %}
       <div class="post">
           <div class="info">
               <div class="user">
-                  <div class="profile-pic"><img src="{{user.profile.photo.url}}" alt=""></div>
-                  <p class="username">{{user.username}}</p>
+                  <div class="profile-pic"><img src="{{image.user.photo.url}}" alt=""></div>
+                  <p class="username">{{image.user.user.username}}</p>
               </div>
               <!-- three dot icons to put after finishing ip -->
           </div>
-          <img src="{{user.image.image.url}}" class="post-image" alt="">
+          <img src="{{image.img.url}}" class="post-image" alt="">
           <div class="post-content">
               <div class="reaction-wrapper">
                   <img src="{% static 'icons/heart.png' %}" class="icon" alt="">
@@ -35,9 +35,9 @@
                   <img src="{% static 'icons/dm.png' %}" class="icon" alt="">
                   <img src="{% static 'icons/save.png' %}" class="save icon" alt="">
               </div>
-              <p class="likes">{{user.image.likes|length }}</p>
-              <p class="description"><span>{{user.username}}</span> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur tenetur veritatis placeat, molestiae impedit aut provident eum quo natus molestias?</p>
-              <p class="post-time">{{user.image.upload_date|timesince}} Ago</p>
+              <p class="likes">{{image.likes|length }}</p>
+              <p class="description"><span>{{image.user.user.username}}</span> {{image.caption}}</p>
+              <p class="post-time">{{image.upload_date|timesince}} Ago</p>
           </div>
           <hr>
           <div class="comment-wrapper">
@@ -46,7 +46,7 @@
               <button class="comment-btn">post</button>
           </div>
       </div>
-      {% endfor %}     
+      {% endfor %}  
   </div>
 </div>
 
@@ -63,7 +63,7 @@
             
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{upload_form.image}}
+                {{upload_form.img}}
                 <div>
                   {{upload_form.name.label}}
                   {{upload_form.name}}
