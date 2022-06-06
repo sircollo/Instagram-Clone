@@ -1,4 +1,5 @@
 from email import message
+from multiprocessing import context
 from urllib import request
 from django.shortcuts import render,redirect
 from .forms import *
@@ -53,11 +54,22 @@ def logoutUser(request):
   return redirect('index')
 
 
+# def index(request):
+#   user = request.user
+#   posts = Image.objects.filter(user=user)
+#   group_ids = []
+#   for post in posts:
+#     group_ids.append(post.post_id)
+#   post_items = Image.objects.filter(id__in=group_ids).all().order_by('-upload_date')
+#   context = {
+#     'post_items': post_items
+#   }
+#   return render(request, 'home.html',context)
+
 @login_required(login_url='/')
 def index(request):
   users = User.objects.all()
   images = Image.objects.all()
-  context = {}
   current_user = request.user
   get_profile = Profile.objects.filter(id=current_user.id).first()
   user = Image.objects.filter(user=get_profile).all()
@@ -75,15 +87,15 @@ def index(request):
 
 
 @login_required(login_url='/')
-def postImage(request):
-  current_user = request.user
-  get_profile = Profile.objects.filter(id=current_user.id).first()
-  user = Image.objects.filter(user=get_profile).all()
+def postImage(request,id):
+  user = request.user
+  get_profile = Profile.objects.filter(id=user).first()
+  images = Image.objects.filter(user=get_profile).all()
   if request.method == 'POST':
       upload_form = PostImageForm(request.POST,request.FILES)
       if upload_form.is_valid():
           post = upload_form.save(commit=False)
-          post.user= get_profile
+          post.user.username = get_profile
           post.save()
           return redirect('')
   else:
@@ -94,10 +106,11 @@ def postImage(request):
 
 
 @login_required(login_url='/')
-def profile(request,pk):
-  profile = User.objects.get(pk=pk)  
-  images = Image.objects.filter(user__pk=pk)
-  context = {'profile':profile,'images':images,'images':images}
+def profile(request,id):
+  user=request.user
+  profiles = Profile.objects.get(user=id)  
+  images = Image.objects.filter(user=profiles)
+  context = {'user':user,'images':images,'profiles':profiles}
   return render(request, 'profile.html',context)
     
 
