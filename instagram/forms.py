@@ -27,8 +27,24 @@ class LoginForm(AuthenticationForm):
 class PostImageForm(forms.ModelForm):
   name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Name', 'style': 'width: 200px;'}))
   caption = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Caption', 'style': 'width: 200px; margin-top:20px'}))
-  image = forms.ImageField(widget=forms.FileInput(attrs={'placeholder': 'Caption', 'style': 'width: 200px; margin-top:20px'}))
+  img = forms.ImageField(widget=forms.FileInput(attrs={'placeholder': 'Caption', 'style': 'width: 200px; margin-top:20px'}))
   class Meta:
     model = Image
-    fields = ['image','caption','name']
+    fields = ['img','caption','name']
+class UpdateProfileForm(forms.ModelForm):
+  photo =forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
+  bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))
+  
+class Meta:
+  models = Profile
+  fields = ['photo','bio']
+  
+  
+class UpdateUserForm(forms.ModelForm):
+  username = forms.CharField(max_length=100,required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+  email = forms.EmailField(required=True,widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+  class Meta:
+    model = User
+    fields = ['username', 'email']
 
