@@ -8,13 +8,13 @@
 		<div class="profile">
 			<div class="profile-image">
 
-				<img src="{{profile.profile.photo.url}}" alt="" height="150" width="150" />
+				<img src="{{user.profile.photo.url}}" alt="" height="150" width="150" />
 
 			</div>
 
 			<div class="profile-user-settings">
 
-				<h1 class="profile-user-name">{{profile.username}}</h1>
+				<h1 class="profile-user-name">{{user.username}}</h1>
 
 				<button class="btn profile-edit-btn">Edit Profile</button>
 
@@ -26,7 +26,7 @@
 			<div class="profile-stats">
 
 				<ul>
-					<li><span class="profile-stat-count">{{profile.image|length}}</span> posts</li>
+					<li><span class="profile-stat-count">{{user.image.likes|length}}</span> posts</li>
 					<li><span class="profile-stat-count">{{profile.followers|length}}</span> followers</li>
 					<li><span class="profile-stat-count">{{profile.following|length}}</span> following</li>
 				</ul>
@@ -35,86 +35,29 @@
 
 			<div class="profile-bio">
 
-				<p><span class="profile-real-name">{{profile.first_name}} {{profile.last_name}}</span> Lorem ipsum dolor sit,
+				<p><span class="profile-real-name">{{user.first_name}} {{user.last_name}}</span> Lorem ipsum dolor sit,
 					amet consectetur adipisicing elit 📷✈️🏕️</p>
 
 			</div>
 		</div>
 	</div>
 </header>
-
-<main>
-
-	<div class="container">
-
-		<div class="gallery">
-			{% for image in images %}
-			<div class="gallery-item" tabindex="0">
-
-				<img src="{{image.image.url}}" class="gallery-image" alt="">
-
-				<div class="gallery-item-info">
-
-					<ul>
-						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart"
-								aria-hidden="true"></i> {{images.likes|length}}</li>
-						<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment"
-								aria-hidden="true"></i>{{images.comments|length}}</li>
-					</ul>
-
-				</div>
-
-			</div>
-
-			<h2>No posts yet</h2>
-			{% endfor %}
-			<div class="gallery-item" tabindex="0">
-
-				<img src="{{images.image.url}}" class="gallery-image" alt="">
-
-				<div class="gallery-item-info">
-
-					<ul>
-						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart"
-								aria-hidden="true"></i> 89</li>
-						<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment"
-								aria-hidden="true"></i> 5</li>
-					</ul>
-
-				</div>
-
-			</div>
-
-			<div class="gallery-item" tabindex="0">
-
-				<img src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=500&h=500&fit=crop"
-					class="gallery-image" alt="">
-
-				<div class="gallery-item-type">
-
-					<span class="visually-hidden">Gallery</span><i class="fas fa-clone" aria-hidden="true"></i>
-
-				</div>
-
-				<div class="gallery-item-info">
-
-					<ul>
-						<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart"
-								aria-hidden="true"></i> 42</li>
-						<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment"
-								aria-hidden="true"></i> 1</li>
-					</ul>
-
-				</div>
-
-			</div>
-
-		</div>
-
-		<div class="loader"></div>
-
-	</div>
-
-</main>
-
+<hr>
+<section class="post-list">
+	{% for image in images %}
+  <a href="" class="post">
+    <figure class="post-image">
+      <img src="{{image.img.url}}" alt="">
+    </figure>
+    <span class="post-overlay">
+      <p>
+        <span class="post-likes">150</span>
+        <span class="post-comments">10</span>
+      </p>
+    </span>
+  </a>
+  {% endfor %}
+ 
+  
+</section>
 {% endblock %}
