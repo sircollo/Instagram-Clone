@@ -4,6 +4,8 @@ from cloudinary.models import CloudinaryField
 import datetime
 from django.contrib.auth.models import User
 from django.urls import reverse
+import cloudinary
+from cloudinary.models import CloudinaryField
 class Profile(models.Model):
   photo = CloudinaryField('image')
   bio = models.TextField()
@@ -30,7 +32,8 @@ class Profile(models.Model):
   
 
 class Image(models.Model):
-  img = models.ImageField(upload_to='images/')
+  # img = models.ImageField(upload_to='images/')
+  img = cloudinary.models.CloudinaryField('image')
   name = models.CharField(max_length=30,default='image_name')
   caption = models.CharField(max_length=30,default='')
   upload_date = models.DateTimeField(auto_now_add=True, null=True)
