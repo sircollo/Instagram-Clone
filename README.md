@@ -83,9 +83,12 @@ Read here on how to [Deploy](https://gist.github.com/newtonkiragu/42f2500e56d9c2
 
 [Live Link](https://insta-kram.herokuapp.com/)
 
+### Admin
+  username - collo
+  password - testings
 
 ### License
 
-[MIT License](https://github.com/sircollo/Instagram-Clone/blob/master/license)
+[MIT License](https://github.com/sircollo/Instagram-Clone/blob/main/license)
 
 Copyright (c) 2022 Collins Sirwani
