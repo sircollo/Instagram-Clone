@@ -13,6 +13,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.views.generic import ListView
 from django.db.models import Q
+from django.http import HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
 # Create your views here.
 
 def home(request):
@@ -53,19 +55,6 @@ def logoutUser(request):
   logout(request)
   return redirect('index')
 
-
-# def index(request):
-#   user = request.user
-#   posts = Image.objects.filter(user=user)
-#   group_ids = []
-#   for post in posts:
-#     group_ids.append(post.post_id)
-#   post_items = Image.objects.filter(id__in=group_ids).all().order_by('-upload_date')
-#   context = {
-#     'post_items': post_items
-#   }
-#   return render(request, 'home.html',context)
-
 @login_required(login_url='/')
 def index(request):
   users = User.objects.all()
@@ -82,26 +71,45 @@ def index(request):
           return redirect('index')
   else:
       upload_form =PostImageForm
-  context = {'upload_form':upload_form,'users':users,'images':images}
+  context = {'upload_form':upload_form,'users':users,'images':images,'comments':comments,"current":current_user}
   return render(request, 'home.html',context)
 
 
 @login_required(login_url='/')
-def postImage(request,id):
-  user = request.user
-  get_profile = Profile.objects.filter(id=user).first()
-  images = Image.objects.filter(user=get_profile).all()
+def postImage(request):
+  upload_form =PostImageForm()
+  user = Profile.objects.get(user=request.user)
   if request.method == 'POST':
-      upload_form = PostImageForm(request.POST,request.FILES)
-      if upload_form.is_valid():
-          post = upload_form.save(commit=False)
-          post.user.username = get_profile
-          post.save()
-          return redirect('')
+    upload_form = PostImageForm(request.POST,request.FILES)
+    if upload_form.is_valid():
+      img = upload_form.cleaned_data['img']
+      name = upload_form.cleaned_data['name']
+      caption = upload_form.cleaned_data['caption']
+      
+      new_image = Image(img=img,name=name,caption=caption,user=user)
+      new_image.save()
+      return redirect('')
   else:
       upload_form =PostImageForm
   return render(request, 'home.html', {"upload_form": upload_form})
 
+
+
+
+
+@login_required(login_url='/')
+def comments(request,pk):
+  # user = request.user
+  image = Image.objects.get(id=pk)
+  comments = Comment.objects.filter(image=image)
+  if request.method == 'POST':
+      comment = request.POST.get('comment')
+      commentor = Profile.objects.get(user=request.user)
+      new_comment = Comment.objects.create(comment=comment,image=image,user=commentor)
+      new_comment.save()
+    
+  context = {'comment': comments, 'image':image} 
+  return render(request, 'comments.html', context )
 
 
 
@@ -123,3 +131,59 @@ class search_user(ListView):
       object_list = User.objects.filter(
         Q(username__icontains=query))
       return object_list
+@login_required(login_url='/')
+def updateProfile(request,id):
+    profile = Profile.objects.get(user=id)
+    form = UpdateProfileForm(request.POST, instance=profile)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    context = {'form': form}
+    return render(request, 'update_profile.html', context)
+@login_required(login_url='/')  
+def unfollow(request, pk):
+  if request.method == 'GET':
+      try:
+          user1 = User.objects.get(username=pk)
+      except User.DoesNotExist:
+          user1 = None
+
+      unfollow= Follow.objects.filter(follower=request.user, following=user1)
+      unfollow.delete()
+      return redirect('profile')
+
+@login_required(login_url='/')
+def follow(request, pk):
+    if request.method == 'GET':
+        try:
+            user2 = User.objects.get(username=pk)
+        except User.DoesNotExist:
+            user2 = None
+    follow = Follow(follower=request.user, following=user2)
+    follow.save()
+    
+    return redirect('index')
+    
+      
+      
+@login_required(login_url='/')  
+def like(request, pk):
+  user = request.user
+  image = Image.objects.get(id=pk)
+  current_likes = image.likes
+  liked = Like.objects.filter(user=user, image=image)
+  
+  if not liked:
+    like = Like.objects.create(user=user, image=image)
+    current_likes = current_likes + 1
+
+  else:
+    Like.objects.filter(user=user, image=image).delete()
+    current_likes = current_likes - 1
+
+  image.likes = current_likes
+  image.save()
+
+  return HttpResponseRedirect(reverse('index'))
+
