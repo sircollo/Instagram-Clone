@@ -2,7 +2,7 @@
 
 <nav class="navbar" style="font-size: 20px;">
   <div class="nav-wrapper">
-    <img src="https://i.imgur.com/zqpwkLQ.png" height="34px"/>  
+    <a href="{% url 'index' %}" class="" ><img src="https://i.imgur.com/zqpwkLQ.png" height="34px"/>  </a>
     {% if user.is_authenticated %}
     <form class="mb-0 h1 ml-auto mr-auto" id="searchform" action="{% url 'search' %}" method="GET">
       <input name="search_user" autocomplete="off" id="searching" class="form-control d-none d-md-block" placeholder="Search">
