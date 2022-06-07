@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<header>
+	<div class="container" style="z-index:-5;">
+		<div class="profile">
+			<div class="profile-image">
+
+				<img src="{{user.profile.photo.url}}" alt="" height="150" width="150" />
+
+			</div>
+
+			<div class="profile-user-settings">
+
+				<h1 class="profile-user-name">{{user.username}}</h1>
+
+				<button class="btn profile-edit-btn"><a href="{% url 'update_profile' user.pk %}" >Edit Profile</a></button>
+
+				<button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog"
+						aria-hidden="true"></i></button>
+
+			</div>
+
+			<div class="profile-stats">
+
+				<ul>
+					<li><span class="profile-stat-count">{{user.image|length}}</span> posts</li>
+					<li><span class="profile-stat-count">{{followers|length}}</span> followers</li>
+					<li><span class="profile-stat-count">{{following|length}}</span> following</li>
+				</ul>
+
+			</div>
+
+			<div class="profile-bio">
+
+				<p><span class="profile-real-name">{{user.first_name}} {{user.last_name}}</span> {{user.profile.bio}}</p>
+
+			</div>
+		</div>
+	</div>
+</header>
+<hr>
+<section class="post-list">
+	{% for image in images %}
+  <a href="" class="post">
+    <figure class="post-image">
+      <img src="{{image.img.url}}" alt="">
+    </figure>
+    <span class="post-overlay">
+      <p>
+        <span class="post-likes">150</span>
+        <span class="post-comments">10</span>
+      </p>
+    </span>
+  </a>
+  {% endfor %}
+ 
+  
+</section>
+{% endblock %}
