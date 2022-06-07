@@ -37,18 +37,24 @@ class Image(models.Model):
     self.save()
     
   def delete_image(self):
-    self.delete()
+    return self.delete()  
+
+    
+  def update_caption(self, pk):
+    caption =self.objects.get(caption=pk)
+    return caption.save()
+    
     
 
 
 class Comment(models.Model):
   comment = models.TextField()
-  user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='comments')
+  user = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='comments')
   image = models.ForeignKey(Image,on_delete=models.CASCADE,related_name='comments',default='')
 
   def __str__(self):
     return self.comment
 
 class Follow(models.Model):
-  follower = models.ForeignKey(User,on_delete=models.CASCADE,related_name='follower')
-  following=models.ForeignKey(User,on_delete=models.CASCADE,related_name='following')
+  follower = models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='follower')
+  following=models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='following')
