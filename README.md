@@ -85,6 +85,7 @@ Read here on how to [Deploy](https://gist.github.com/newtonkiragu/42f2500e56d9c2
 
 ### Admin
   username - collo
+  
   password - testings
 
 ### License
