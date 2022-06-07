@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from django.views.generic import ListView
+from django.views.generic import ListView,CreateView
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
@@ -187,3 +187,14 @@ def like(request, pk):
 
   return HttpResponseRedirect(reverse('index'))
 
+
+class CreateProfilePageView(CreateView):
+  model = Profile
+  form_class = CreateProfileForm
+  template_name = 'create_profile.html'
+  # fields = ['photo','bio']
+  
+  
+  def form_valid(self,form):
+    form.instance.user = self.request.user
+    return super().form_valid(form)

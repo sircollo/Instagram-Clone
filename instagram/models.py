@@ -3,6 +3,7 @@ from django.db import models
 from cloudinary.models import CloudinaryField
 import datetime
 from django.contrib.auth.models import User
+from django.urls import reverse
 class Profile(models.Model):
   photo = CloudinaryField('image')
   bio = models.TextField()
@@ -20,6 +21,8 @@ class Profile(models.Model):
     
   def delete_profile(self):
     self.delete()
+  def get_absolute_url(self):
+    return reverse('index')
   
   @classmethod
   def search_user(cls, name):

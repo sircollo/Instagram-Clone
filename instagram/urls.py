@@ -4,6 +4,7 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import search_user
+from .views import CreateProfilePageView
 urlpatterns = [
     url('$', views.home, name='home'),
     url('^register/',views.register, name='register'),
@@ -19,6 +20,7 @@ urlpatterns = [
     path('follow/<str:pk>', views.follow, name='follow'),
     path('unfollow/<str:pk>', views.follow, name='unfollow'),
     path('like/<str:pk>', views.like, name='likes'),
+    path('create_profile/',CreateProfilePageView.as_view(), name='create_profile_page'),
 ]
 
 

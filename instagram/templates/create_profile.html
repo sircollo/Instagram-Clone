@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container text-center pt-3">
+  <div class="header pt-5">
+    <h1>Create Profile</h1>
+  </div>
+</div>
+<div class="container justify-content-center">
+  <div class=" col-md-6 pt-3 form-group-control style="width: 300px;">
+    <form action=""method="POST" enctype="multipart/form-data" class="form-group-control">
+      {% csrf_token %}
+      <div class="profile-photo">
+        <label for="">Profile Image</label>
+        {{form.photo}}
+      </div>
+      <div class="bio pt-4">
+        <label for="">Bio:</label>
+        {{form.bio}}
+      </div>
+      <div class="submit pt-4">
+      <input type="submit" value="Create Profile" class="btn btn-primary">
+    </div>
+    </form>
+  </div>
+</div>
+
+
+{% endblock %}

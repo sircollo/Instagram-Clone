@@ -47,4 +47,12 @@ class UpdateUserForm(forms.ModelForm):
   class Meta:
     model = User
     fields = ['username', 'email']
-
+    
+class CreateProfileForm(forms.ModelForm):
+  bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))
+  class Meta:
+      model = Profile
+      fields = ['photo','bio']
+      
+     
+  
