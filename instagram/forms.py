@@ -33,7 +33,7 @@ class PostImageForm(forms.ModelForm):
     fields = ['img','caption','name']
     
 class UpdateProfileForm(forms.ModelForm):
-  photo =forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
+  photo =CloudinaryField()
   bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))  
   class Meta:
     model = Profile
