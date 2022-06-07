@@ -31,13 +31,13 @@ class PostImageForm(forms.ModelForm):
   class Meta:
     model = Image
     fields = ['img','caption','name']
+    
 class UpdateProfileForm(forms.ModelForm):
   photo =forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
-  bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))
-  
-class Meta:
-  models = Profile
-  fields = ['photo','bio']
+  bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))  
+  class Meta:
+    model = Profile
+    fields = ['photo','bio']
   
   
 class UpdateUserForm(forms.ModelForm):
