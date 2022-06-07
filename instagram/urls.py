@@ -14,6 +14,10 @@ urlpatterns = [
     url(r'^profile/(\d+)', views.profile, name='profile'),
     # url('logout/', views.logout, name='logout'),
     path('search/', search_user.as_view(), name='search'),
+    path('comments/<str:pk>', views.comments, name='comments'),
+    path('update_profile/<str:id>', views.updateProfile, name='update_profile'),
 ]
+
+
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
