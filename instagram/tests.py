@@ -10,6 +10,7 @@ class TestProfileCase(TestCase):
     
     self.profile = Profile(id=1, photo='test.jpg',bio='test stuff',user=self.user)
     
+    
   def test_instance(self):
     self.assertTrue(self.profile,Profile)
     
@@ -18,12 +19,16 @@ class TestProfileCase(TestCase):
     new_object = Profile.objects.all()
     self.assertTrue(len(new_object)>0)
     
+
+    
 class TestImageCase(TestCase):
   def setUp(self):
     self.profile = Profile(id=1, photo='test.jpg',bio='test stuff')
     self.profile.save()
-    
-    self.image = Image(image='test.jpg',name='test_image',caption='test_caption',user=self.profile)
+    self.user = User(username='collo')
+    self.user.save()    
+    self.image = Image(img='test.jpg',name='test_image',caption='test_caption',user=self.profile)
+  
   def test_instance(self):
     self.assertTrue(isinstance(self.image,Image))
     
@@ -34,5 +39,10 @@ class TestImageCase(TestCase):
     
   def test_delete_method(self):
     self.image.delete_image()
-    new_object = Profile.objects.all()
+    new_object = Profile.objects.filter(name=self.name)
     self.assertTrue(len(new_object)<0)
+    
+  def test_update_caption(self):
+    self.image.save_image()
+    new_caption = Image.objects.get(caption='new caption')
+    self.image.update_caption(new_caption)
