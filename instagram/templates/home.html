@@ -88,8 +88,9 @@
 
 
 </section>
-<div class="container">
-    <div class="modal" id="myModal">
+
+<div class="container ">
+    <div class="modal " id="myModal">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header  text-center">
@@ -97,22 +98,29 @@
             <button type="button" class="close" data-dismiss="modal">×</button>
           </div>
           <div class="modal-body">          
-            
-            <form method="post" enctype="multipart/form-data">
+            <div class="container">
+              <div class="upload-form upload">
+              <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{upload_form.img}}
-                <div>
+                <div class="img pt-2">
+                  {{upload_form.img}}
+                </div>                
+                <div class="img-name pt-2">
                   {{upload_form.name.label}}
                   {{upload_form.name}}
                 </div>
-                <div>
+                <div class="img-caption pt-2">
                 {{upload_form.caption.label}}
                 {{upload_form.caption}}
               </div>
-             
+            </div>
                 <input type="hidden" name="next" value="{{ next }}" />  
+                <div class="subButn pt-2">
                 <button type="submit" class="btn btn-primary">Post</button>
+              </div>
             </form>
+            </div>
+            
           
           </div>
           <div class="modal-footer">
@@ -124,6 +132,7 @@
     </div>
    
   </div>
+
   <script>
   $("#show").click(function(){
     $('#myModal').modal('show');

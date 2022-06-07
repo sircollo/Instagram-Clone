@@ -25,9 +25,9 @@ class LoginForm(AuthenticationForm):
     
     
 class PostImageForm(forms.ModelForm):
-  name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Name', 'style': 'width: 200px;'}))
-  caption = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Caption', 'style': 'width: 200px; margin-top:20px'}))
-  img = forms.ImageField(widget=forms.FileInput(attrs={'placeholder': 'Caption', 'style': 'width: 200px; margin-top:20px'}))
+  name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Name', 'style': 'width: 200px;'}))
+  caption = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Caption', 'style': 'width: 200px; margin-top:20px'}))
+  img = forms.ImageField(widget=forms.FileInput(attrs={'style': 'width: 200px; margin-top:20px'}))
   class Meta:
     model = Image
     fields = ['img','caption','name']
