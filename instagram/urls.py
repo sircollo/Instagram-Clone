@@ -11,11 +11,14 @@ urlpatterns = [
     url('^new_post/',views.postImage, name='upload'),
     path('accounts/', include('django_registration.backends.one_step.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    url(r'^profile/(\d+)', views.profile, name='profile'),
+    url('^profile/(\d+)', views.profile, name='profile'),
     # url('logout/', views.logout, name='logout'),
     path('search/', search_user.as_view(), name='search'),
     path('comments/<str:pk>', views.comments, name='comments'),
     path('update_profile/<str:id>', views.updateProfile, name='update_profile'),
+    path('follow/<str:pk>', views.follow, name='follow'),
+    path('unfollow/<str:pk>', views.follow, name='unfollow'),
+    path('like/<str:pk>', views.like, name='likes'),
 ]
 
 
