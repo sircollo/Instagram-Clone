@@ -30,25 +30,62 @@
           <img src="{{image.img.url}}" class="post-image" alt="">
           <div class="post-content">
               <div class="reaction-wrapper">
-                  <img src="{% static 'icons/heart.png' %}" class="icon" alt="">
+                <a href="{%url 'likes' image.id%}" class="text-decoration-none text-dark"><img src="{% static 'icons/heart.png' %}" class="icon" alt=""></a>
                   <img src="{% static 'icons/chat.png' %}" class="icon" alt="">
                   <img src="{% static 'icons/dm.png' %}" class="icon" alt="">
                   <img src="{% static 'icons/save.png' %}" class="save icon" alt="">
               </div>
-              <p class="likes">{{image.likes|length }}</p>
+              <p class="likes">{{image.likes}} Likes</p>
               <p class="description"><span>{{image.user.user.username}}</span> {{image.caption}}</p>
               <p class="post-time">{{image.upload_date|timesince}} Ago</p>
           </div>
+          {% for comment in comments %}
+          <li>{{comment.comment }}</li>
+            {% endfor %}
+          <div class="mb-2 text-center">
+            <a class="text-muted text-decoration-none view-comments" href="{%url 'comments' image.id%}">
+                view comments
+            </a>
+        </div>
           <hr>
           <div class="comment-wrapper">
               <img src="{% static 'icons/smile.png' %}" class="icon" alt="">
               <input type="text" class="comment-box" placeholder="Add a comment">
-              <button class="comment-btn">post</button>
+              <a href="{%url 'comments' image.id%}"><button class="comment-btn">post</button></a>
           </div>
       </div>
       {% endfor %}  
   </div>
+<!-- to do tommorow -->
+
+  <div class="right-col">
+    <div class="profile-card">
+   
+        <div class="profile-pic">
+            <img src="{{current.profile.photo.url}}" alt="">
+        </div>
+        <div>
+            <p class="username">{{current.username}}</p>
+        </div>
+       
+        <button class="action-btn">switch</button>
+    </div>
+    <p class="suggestion-text">Suggestions for you</p>
+    {% for user in users %}
+    <div class="profile-card">
+        <div class="profile-pic">
+            <img src="{{user.profile.photo.url}}" alt="{{user.username}}">
+        </div>
+        <div>
+           <p class="username">{{user.username}}</p></a> 
+
+        </div>
+        <a href="{%url 'follow' user.pk%}"><button class="action-btn">follow</button></a>
+    </div>
+    {% endfor %}
+  </div>
 </div>
+
 
 </section>
 <div class="container">
