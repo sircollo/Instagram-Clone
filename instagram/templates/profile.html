@@ -16,7 +16,7 @@
 
 				<h1 class="profile-user-name">{{user.username}}</h1>
 
-				<button class="btn profile-edit-btn">Edit Profile</button>
+				<button class="btn profile-edit-btn"><a href="{% url 'update_profile' user.pk %}" >Edit Profile</a></button>
 
 				<button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog"
 						aria-hidden="true"></i></button>
@@ -26,17 +26,16 @@
 			<div class="profile-stats">
 
 				<ul>
-					<li><span class="profile-stat-count">{{user.image.likes|length}}</span> posts</li>
-					<li><span class="profile-stat-count">{{profile.followers|length}}</span> followers</li>
-					<li><span class="profile-stat-count">{{profile.following|length}}</span> following</li>
+					<li><span class="profile-stat-count">{{user.image|length}}</span> posts</li>
+					<li><span class="profile-stat-count">{{followers|length}}</span> followers</li>
+					<li><span class="profile-stat-count">{{following|length}}</span> following</li>
 				</ul>
 
 			</div>
 
 			<div class="profile-bio">
 
-				<p><span class="profile-real-name">{{user.first_name}} {{user.last_name}}</span> Lorem ipsum dolor sit,
-					amet consectetur adipisicing elit 📷✈️🏕️</p>
+				<p><span class="profile-real-name">{{user.first_name}} {{user.last_name}}</span> {{user.profile.bio}}</p>
 
 			</div>
 		</div>
