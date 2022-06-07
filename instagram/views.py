@@ -60,14 +60,19 @@ def index(request):
   users = User.objects.all()
   images = Image.objects.all()
   current_user = request.user
-  get_profile = Profile.objects.filter(id=current_user.id).first()
+  get_profile = Profile.objects.filter(user=current_user.id).first()
   user = Image.objects.filter(user=get_profile).all()
   if request.method == 'POST':
       upload_form = PostImageForm(request.POST,request.FILES)
       if upload_form.is_valid():
-          post = upload_form.save(commit=False)
+          post = upload_form.save(commit=True)
           post.user= get_profile
           post.save()
+          img = upload_form.cleaned_data['img']
+          name = upload_form.cleaned_data['name']
+          caption = upload_form.cleaned_data['caption']
+          upload = Image(img=img, name=name,caption=caption, user=get_profile)
+          upload.save_image()
           return redirect('index')
   else:
       upload_form =PostImageForm
