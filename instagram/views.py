@@ -45,7 +45,7 @@ def register(request):
         name = form.cleaned_data.get('username')
         email = form.cleaned_data.get('email')
         messages.success(request, 'Account created Successfully for '+ name)
-        # send_welcome_email(name,email)
+        send_welcome_email(name,email)
         return redirect('home')
      else:
       messages.warning(request, 'Invalid username or password')
