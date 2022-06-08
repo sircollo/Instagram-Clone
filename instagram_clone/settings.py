@@ -18,6 +18,7 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 import dj_database_url
+import cloudinary_storage
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -74,6 +75,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'crispy_forms',
     'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -173,14 +175,24 @@ STATICFILES_DIRS = (
 
 LOGIN_REDIRECT_URL = ''
 LOGOUT_REDIRECT_URL = 'home'
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CRISPY_TEMPLATE_PACK='bootstrap4'
 cloudinary.config( 
   cloud_name = "dtqnkzj6q", 
   api_key = "897699858178261", 
   api_secret = "NsUxBmUCiYvEfB6GnQi8_WqSipU" 
 )
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('cloud_name', default=""),
+    'API_KEY': config('api_key', default=""),
+    'API_SECRET': config('api_secret', default=""),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# Default primary key field type
+# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+CRISPY_TEMPLATE_PACK='bootstrap4'
+
 django_heroku.settings(locals())
