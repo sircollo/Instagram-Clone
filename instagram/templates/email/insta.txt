@@ -1,0 +1,3 @@
+Hi, {{name}}
+
+Welcome to Insta-Kram, Follow, Share, Like, Comment, Enjoy!

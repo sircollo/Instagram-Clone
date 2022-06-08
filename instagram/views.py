@@ -15,6 +15,7 @@ from django.views.generic import ListView,CreateView
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
+from .email import send_welcome_email
 # Create your views here.
 
 def home(request):
@@ -41,9 +42,10 @@ def register(request):
      form = UserForm(request.POST)
      if form.is_valid():
         form.save()
-        user = form.cleaned_data.get('username')
-        messages.success(request, 'Account created Successfully for '+ user)
-     
+        name = form.cleaned_data.get('username')
+        email = form.cleaned_data.get('email')
+        messages.success(request, 'Account created Successfully for '+ name)
+        send_welcome_email(name,email)
         return redirect('home')
      else:
       messages.warning(request, 'Invalid username or password')
