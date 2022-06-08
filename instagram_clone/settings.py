@@ -19,6 +19,7 @@ import cloudinary.uploader
 import cloudinary.api
 import dj_database_url
 import cloudinary_storage
+import socket
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -71,7 +72,7 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 
 # Application definition
-
+socket.getaddrinfo('insta-kram.herokuapp.com', 25)
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
